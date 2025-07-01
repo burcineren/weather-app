@@ -1,11 +1,8 @@
 <template>
     <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-start py-8">
       <h1 class="text-3xl font-bold mb-6">Nuxt Weather App 🌦️</h1>
-  
       <SearchForm />
-  
       <RecentSearches />
-  
       <WeatherCard v-if="weatherData" :weatherData="weatherData" />
     </div>
   </template>
@@ -21,7 +18,6 @@
   const weatherStore = useWeatherStore();
   const weatherData = ref<any>(null);
   
-  // recentCities veya yeni arama sonrası store güncellenirse, en son şehri getir
   watch(
     () => weatherStore.recentCities[0],
     async (newCity) => {
