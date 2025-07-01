@@ -74,7 +74,7 @@ bun run preview
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
-
+```bash
 # .env
 OPENWEATHER_API_KEY=YourApiKey
 ```
