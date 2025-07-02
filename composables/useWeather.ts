@@ -1,4 +1,5 @@
 import { useWeatherStore } from '@/stores/weatherStore';
+import type { WeatherData } from '~/types/weather';
 
 export const useWeather = () => {
     const weatherStore = useWeatherStore();
@@ -7,17 +8,21 @@ export const useWeather = () => {
     const fetchWeather = async (city: string) => {
         weatherStore.clearError();
         weatherStore.setLoading(true);
-
+        const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
         try {
-            const response = await $fetch(`https://api.openweathermap.org/data/2.5/weather`, {
-                params: {
-                    q: city,
-                    appid: config.public.openweatherApiKey,
-                    units: 'metric',
-                },
-            });
+            const response = await $fetch<WeatherData>(
+                `${apiUrl}`,
+                {
+                    params: {
+                        q: city,
+                        appid: config.public.openweatherApiKey,
+                        units: 'metric',
+                    },
+                }
+            )
             console.log('Runtime config API KEY:', config.public.openweatherApiKey);
             weatherStore.addCityToRecent(city);
+            weatherStore.setWeatherData(response)
             return response;
         } catch (error: any) {
             console.error('API error:', error);

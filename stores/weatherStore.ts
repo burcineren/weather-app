@@ -1,15 +1,21 @@
 import { defineStore } from 'pinia'
+import type { WeatherData } from '~/types/weather';
 
 export const useWeatherStore = defineStore('weather', {
     state: () => ({
         recentCities: process.client
             ? JSON.parse(localStorage.getItem('recentCities') || '[]') as string[]
             : [],
+        weatherData: null as WeatherData,
         isLoading: false,
         error: '',
     }),
 
     actions: {
+        setWeatherData(data: WeatherData) {
+            this.weatherData = data;
+        },
+
         addCityToRecent(city: string) {
             const existingIndex = this.recentCities.findIndex(
                 (c) => c.toLowerCase() === city.toLowerCase()
